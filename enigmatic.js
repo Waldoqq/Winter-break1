@@ -13,28 +13,26 @@ function setup() {
     userdot = new userDot();
     for( var j = 0; j < rows; j++ ) {
         for( var i = 0; i < cols; i++) {
-            squares[i+j*cols] = new Square(x + size * i, y + size * j, size);
             userSquares[i+j*cols] = new Square(x + size * i, y + size * j, size);
         }
     }
-    squares[40].hide = true;
     userSquares[40].hide = true;
-    squares[40].solution = true;
     userSquares[40].solution = true;
     userdot.move();
-    setuptime = highlight(floor(random(1)));
+    setuptime = highlight(floor(random(pattern_num)));
     initialGrid(setuptime, cols, rows);
 }
 
+
 function draw() {
     setTimeout(function() {
-        for(var i = 0; i < squares.length; i++){
+        for(var i = 0; i < userSquares.length; i++){
                 userSquares[i].displaySecond();
                // text(i, squares[i].x-10, squares[i].y); 
             }
     checkMovement();
     userdot.move();
-    checkToDeleteWinOrLose();
+    checkToHideWinOrLose();
      }, setuptime + rows * 100);
 }
 
@@ -52,7 +50,7 @@ function checkMovement(){
         userdot.y += 5;
 }
 
-function checkToDeleteWinOrLose() {
+function checkToHideWinOrLose() {
     var win = true;
     for(var i = 0; i < userSquares.length; i++){
         if(userSquares[i].hide != userSquares[i].solution)
@@ -71,8 +69,11 @@ function checkToDeleteWinOrLose() {
 function initialGrid(time, cols, rows){
     for(var j = rows-1; j >= 0; j--) {
         for(var i = cols-1; i >= 0; i--) {
-            (function(x, y) {
-                setTimeout(function() { userSquares[x+y*cols].displaySecond(); }, time + (-j+rows)*100);})(i, j);
+            if (i+j*cols != 40){
+                (function(x, y) {
+                    setTimeout(function() { userSquares[x+y*cols].displaySecond(); 
+                    }, time + (-j+rows)*100);})(i, j);
+            }
         }
     }
 }

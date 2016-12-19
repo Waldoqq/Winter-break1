@@ -18,9 +18,10 @@ function Square(x, y, size) {
         rectMode(CENTER);
         strokeWeight(6);
         if (this.hide === true) {
+            noStroke();
             stroke(96);
             fill(96);
-            rect(this.x, this.y, this.size-12, this.size-12);
+            rect(this.x+3, this.y+3, this.size-5, this.size-5);
         }
         else {
             stroke(153, 153, 0);
@@ -28,7 +29,6 @@ function Square(x, y, size) {
             rect(this.x, this.y, this.size, this.size);
         }
     };    
-
 
     this.checkDistance = function(x, y, r) {
         var d = dist(this.x, this.y, x, y);
